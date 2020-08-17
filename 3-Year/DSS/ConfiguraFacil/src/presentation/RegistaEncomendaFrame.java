@@ -1,0 +1,364 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package presentation;
+
+import javax.swing.table.*;
+import business.ConfiguraFacil;
+import business.gConfig.Componente;
+import business.gConfig.Configuracao;
+import business.gConfig.Pacote;
+import business.gConta.Cliente;
+import business.gFabrica.Encomenda;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.*;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle;
+
+/**
+ *
+ * @author Pedro
+ */
+public class RegistaEncomendaFrame extends javax.swing.JFrame {
+
+    ConfiguraFacil cf;
+    List<Cliente> clientes;
+    Configuracao config;
+
+    /**
+     * Creates new form RegistaEncomendaFrame
+     */
+    private void novo_cliente_btnActionPerformed(ActionEvent e) {
+        new NovoClienteFrame(this.cf,null,this).setVisible(true);
+    }
+
+    private void sair_btnActionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(new JFrame(), "A configuração não foi confirmada.", "Sair", JOptionPane.ERROR_MESSAGE);
+        this.dispose();
+    }
+
+
+    /**
+     * Método que atualiza a tabela dos clientes
+     * @param clientes nova lista de clientes a exibir
+     */
+    public void updateClientesTable(Collection<Cliente> clientes){
+        DefaultTableModel model = (DefaultTableModel) clientes_tbl.getModel();
+        Object row_data[] = new Object[3];
+
+        // Remove todos
+        model.setRowCount(0);
+
+        // Adiciona novos
+        for(Cliente c : clientes){
+            row_data[0] = c.getID();
+            row_data[1] = c.getNome();
+            row_data[2] = c.getTelemovel();
+            model.addRow(row_data);
+        }
+    }
+
+    /**
+     * Método que atualiza a tabela das componentes existentes na configuração
+     * @param comps componentes da comfiguração
+     * @param pac pacotes da configuração
+     */
+    private void updateComponentesTable(Collection<Componente> comps, Collection<Pacote> pac){
+        DefaultTableModel model = (DefaultTableModel) cmp_tbl.getModel();
+        Object row_data[] = new Object[3];
+
+        // Remove todos
+        model.setRowCount(0);
+
+        // Adiciona novos
+        for(Componente c : comps){
+            row_data[0] = c.getID();
+            row_data[1] = c.getDesignacao();
+            row_data[2] = c.getPreco();
+            model.addRow(row_data);
+        }
+        for(Pacote p : pac){
+            for(Componente c : p.getComponentes()){
+                row_data[0] = c.getID();
+                row_data[1] = c.getDesignacao();
+                row_data[2] = c.getPreco();
+                model.addRow(row_data);
+            }
+        }
+    }
+
+    private void cliente_txtKeyReleased(KeyEvent e) {
+        String to_search = cliente_txt.getText();
+
+        Collection<Cliente> filtered = this.clientes.stream().filter(c -> c.getNome().contains(to_search))
+                                                             .collect(Collectors.toList());
+
+        updateClientesTable(filtered);
+    }
+
+    private void registar_encomenda_btnActionPerformed(ActionEvent evt) throws Exception {
+        DefaultTableModel model = (DefaultTableModel)clientes_tbl.getModel();
+        try{
+            int id_cliente = (int) clientes_tbl.getValueAt(clientes_tbl.getSelectedRow(), 0);
+
+            this.cf.registaEncomenda(this.config, id_cliente, 1); // FIXME: 12/28/2018
+
+            this.dispose();
+        }
+        catch (java.lang.ArrayIndexOutOfBoundsException e1){
+            JOptionPane.showMessageDialog(new JFrame(), "Selecione um cliente", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        } catch (ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+
+    }
+
+    public void updateList(List<Cliente> list) {
+        this.clientes = list;
+    }
+
+    public RegistaEncomendaFrame(ConfiguraFacil cf, Configuracao config) throws Exception {
+        initComponents();
+        this.cf = cf;
+        this.clientes = cf.getClientes();
+        this.config = config;
+
+        updateComponentesTable(config.getComponentes(), config.getPacotes());
+        updateClientesTable(this.clientes);
+
+        double preco = config.calculaPreco();
+        double desconto = config.calculaDesconto();
+        double total = preco-desconto;
+
+        preco_txt.setText(String.valueOf(preco));
+        desconto_txt.setText(String.valueOf(desconto));
+        total_txt.setText(String.valueOf(total));
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // Generated using JFormDesigner Evaluation license - Pedro Moreira
+    private void initComponents() {
+        cliente_txt = new JTextField();
+        jScrollPane1 = new JScrollPane();
+        clientes_tbl = new JTable();
+        novo_cliente_btn = new JButton();
+        jScrollPane2 = new JScrollPane();
+        cmp_tbl = new JTable();
+        jLabel1 = new JLabel();
+        jLabel2 = new JLabel();
+        sair_btn = new JButton();
+        registar_encomenda_btn = new JButton();
+        label1 = new JLabel();
+        preco_txt = new JTextField();
+        desconto_txt = new JTextField();
+        total_txt = new JTextField();
+
+        //======== this ========
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Regista Encomenda");
+        Container contentPane = getContentPane();
+
+        //---- cliente_txt ----
+        cliente_txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cliente_txtKeyReleased(e);
+            }
+        });
+
+        //======== jScrollPane1 ========
+        {
+
+            //---- clientes_tbl ----
+            clientes_tbl.setModel(new DefaultTableModel(
+                new Object[][] {
+                    {null, null, null},
+                    {null, null, null},
+                },
+                new String[] {
+                    "ID", "Nome", "Telem\u00f3vel"
+                }
+            ) {
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false
+                };
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
+                }
+            });
+            {
+                TableColumnModel cm = clientes_tbl.getColumnModel();
+                cm.getColumn(0).setPreferredWidth(1);
+            }
+            jScrollPane1.setViewportView(clientes_tbl);
+        }
+
+        //---- novo_cliente_btn ----
+        novo_cliente_btn.setText("Novo Cliente");
+        novo_cliente_btn.addActionListener(e -> novo_cliente_btnActionPerformed(e));
+
+        //======== jScrollPane2 ========
+        {
+
+            //---- cmp_tbl ----
+            cmp_tbl.setModel(new DefaultTableModel(
+                new Object[][] {
+                    {null, null, null},
+                    {null, null, null},
+                },
+                new String[] {
+                    "ID", "Designa\u00e7\u00e3o", "Pre\u00e7o"
+                }
+            ) {
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false
+                };
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
+                }
+            });
+            {
+                TableColumnModel cm = cmp_tbl.getColumnModel();
+                cm.getColumn(0).setPreferredWidth(1);
+            }
+            jScrollPane2.setViewportView(cmp_tbl);
+        }
+
+        //---- jLabel1 ----
+        jLabel1.setText("Pre\u00e7o");
+
+        //---- jLabel2 ----
+        jLabel2.setText("Desconto");
+
+        //---- sair_btn ----
+        sair_btn.setText("Sair");
+        sair_btn.addActionListener(e -> sair_btnActionPerformed(e));
+
+        //---- registar_encomenda_btn ----
+        registar_encomenda_btn.setText("Registar Encomenda");
+        registar_encomenda_btn.addActionListener(e -> {
+            try {
+                registar_encomenda_btnActionPerformed(e);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        //---- label1 ----
+        label1.setText("Total");
+
+        //---- preco_txt ----
+        preco_txt.setEditable(false);
+
+        //---- desconto_txt ----
+        desconto_txt.setEditable(false);
+
+        //---- total_txt ----
+        total_txt.setEditable(false);
+
+        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
+        contentPane.setLayout(contentPaneLayout);
+        contentPaneLayout.setHorizontalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addComponent(cliente_txt, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(novo_cliente_btn))
+                                .addGroup(GroupLayout.Alignment.LEADING, contentPaneLayout.createSequentialGroup()
+                                    .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(jLabel1, GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(label1, GroupLayout.Alignment.TRAILING))
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(total_txt, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                        .addComponent(desconto_txt, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                        .addComponent(preco_txt, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)))))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(sair_btn)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                            .addComponent(registar_encomenda_btn)))
+                    .addContainerGap())
+        );
+        contentPaneLayout.setVerticalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(29, 29, 29)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(novo_cliente_btn)
+                        .addComponent(cliente_txt, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(preco_txt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(desconto_txt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(total_txt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label1))
+                            .addGap(34, 34, 34)))
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(sair_btn)
+                        .addComponent(registar_encomenda_btn))
+                    .addContainerGap())
+        );
+        pack();
+        setLocationRelativeTo(getOwner());
+    }// </editor-fold>//GEN-END:initComponents
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - Pedro Moreira
+    private JTextField cliente_txt;
+    private JScrollPane jScrollPane1;
+    private JTable clientes_tbl;
+    private JButton novo_cliente_btn;
+    private JScrollPane jScrollPane2;
+    private JTable cmp_tbl;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JButton sair_btn;
+    private JButton registar_encomenda_btn;
+    private JLabel label1;
+    private JTextField preco_txt;
+    private JTextField desconto_txt;
+    private JTextField total_txt;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,103 @@
+JFDML JFormDesigner: "6.0.5.0.178" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {par l {seq {par l {seq l {space :p:55:p, par t {comp label2:::p::p, comp label4:::p::p}, space :::p, par l {comp jComboBox1:::p:103:p, comp preco_txt:::::x}}, seq l {space :p:51:p, comp label1:::p::p, space :::p, comp nome_txt:::p:104:p}}, space :p:30:p}, seq l {space :p:38:p, comp button1:::p:63:p, space u:::p, comp adicionar_btn:::p::p, space :::x}}, comp scrollPane1:::p:362:p, space :p:22:p}}"
+			"$verticalGroup": "par l {seq l {space :p:17:p, par t {comp scrollPane1::t:p:164:p, seq {par b {comp nome_txt::b:p::p, comp label1::b:p::p}, space :p:13:p, par b {comp label2::b:p::p, comp jComboBox1::b:p::p}, space u:::p, par b {comp label4::b:p::p, comp preco_txt::b:p::p}, space :p:28:p, par b {comp adicionar_btn::b:p::p, comp button1::b:p::p}}}, space ::12:x}}"
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 2
+			"title": "Nova Componente"
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "nome_txt"
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "jComboBox1"
+				"model": new javax.swing.DefaultComboBoxModel {
+					selectedItem: "1 - Pintura"
+					addElement( "1 - Pintura" )
+					addElement( "2 - Jantes" )
+					addElement( "3 - Pneus" )
+					addElement( "4 - Motorização" )
+					addElement( "5 - Vidros" )
+					addElement( "6 - Estofos" )
+				}
+				auxiliary() {
+					"JavaCodeGenerator.typeParameters": "String"
+				}
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "adicionar_btn"
+				"text": "Adicionar"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "adicionar_btnActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Nome"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Tipo"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Preço"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "preco_txt"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Sair"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sair_btnActionPerformed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "table1"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( false )
+							add( false )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( false )
+							add( false )
+						} )
+					}, new java.util.Vector {
+						add( "ID" )
+						add( "Designação" )
+						add( "Complementar" )
+						add( "Incompatíveis" )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( class java.lang.Boolean )
+						add( class java.lang.Boolean )
+					}, new java.util.Vector {
+						add( false )
+						add( false )
+						add( true )
+						add( true )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					} )
+					addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "table1PropertyChange", true ) )
+					addEvent( new FormEvent( "java.awt.event.ContainerListener", "componentAdded", "table1ComponentAdded", true ) )
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 610, 225 )
+			"location": new java.awt.Point( 0, 5 )
+		} )
+	}
+}

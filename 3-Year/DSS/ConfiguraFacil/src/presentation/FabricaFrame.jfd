@@ -1,0 +1,47 @@
+JFDML JFormDesigner: "6.0.5.0.178" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :p:81:p, par l {comp encomendas_btn:::p:176:p, comp stock_btn:::p:176:p}, space ::76:x}, seq t {space :0:0:x, comp jLabel1:::p:199:p, space :p:63:p}, seq t {space :::p, comp sair_btn:::p::p, space ::126:x, comp login_lbl:::p:122:p, space :p:5:p}}"
+			"$verticalGroup": "par l {seq t {space :p:24:p, comp jLabel1:::p:48:p, space ::31:x, comp encomendas_btn:::p:41:p, space :6:6:p, comp stock_btn:::p:41:p, par l {seq {space :p:51:p, comp sair_btn:::p::p, space :p:7:p}, seq t {space :::p, comp login_lbl:::p::p, space :p:2:p}}}}"
+		} ) {
+			name: "this"
+			"defaultCloseOperation": 2
+			"title": "Fábrica"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "jLabel1"
+				"font": new java.awt.Font( "Tahoma", 0, 18 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/presentation/logo.png" )
+				"text": "- FÁBRICA"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "encomendas_btn"
+				"font": new java.awt.Font( "Tahoma", 0, 12 )
+				"text": "Visualizar Encomendas"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "encomendas_btnActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "stock_btn"
+				"font": new java.awt.Font( "Tahoma", 0, 12 )
+				"text": "Atualizar Stock"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "stock_btnActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "sair_btn"
+				"text": "Sair"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sair_btnActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "login_lbl"
+				"font": new java.awt.Font( "Tahoma", 0, 8 )
+				"text": "Logged in as"
+				"horizontalAlignment": 4
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 335, 305 )
+			"location": new java.awt.Point( 0, 0 )
+		} )
+	}
+}

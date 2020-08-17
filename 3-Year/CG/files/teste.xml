@@ -1,0 +1,14 @@
+<scene>
+    <lights>
+        <light type="POINT" X="0.0" Y="0.0" Z="0.0" />
+    </lights>
+    <group>
+        <! SUN />
+        <translate X='0' Y='0' Z='3' />
+        <models>
+            <model file='aux.3ds' texture='8k_sun.jpg'>
+                <material type='Emissive' X="1" Y="1" Z="1" />
+            </model>
+        </models>
+    </group>
+</scene>
