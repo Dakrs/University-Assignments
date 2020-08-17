@@ -1,0 +1,145 @@
+{
+  "name": "amcyni",
+  "productName": "amcyni",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Dakrs",
+    "email": "diogosobral98@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "amcyni"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/MainWindow/index.html",
+                  "js": "./src/MainWindow/renderer.js",
+                  "name": "main_window",
+                  "preload": {
+                    "js": "./src/MainWindow/preload.js"
+                  }
+                },
+                {
+                  "html": "./src/LoadingWindow/loading.html",
+                  "js": "./src/LoadingWindow/loading.js",
+                  "name": "loading_window"
+                },
+                {
+                  "html": "./src/ModalWindow/modal.html",
+                  "js": "./src/ModalWindow/modalgoogle.js",
+                  "name": "google_modal",
+                  "preload": {
+                    "js": "./src/ModalWindow/preload.js"
+                  }
+                },
+                {
+                  "html": "./src/ModalWindow/modal.html",
+                  "js": "./src/ModalWindow/modaloutlook.js",
+                  "name": "outlook_modal",
+                  "preload": {
+                    "js": "./src/ModalWindow/preload.js"
+                  }
+                },
+                {
+                  "html": "./src/ModalWindow/modal.html",
+                  "js": "./src/ModalWindow/modalgithub.js",
+                  "name": "github_modal",
+                  "preload": {
+                    "js": "./src/ModalWindow/preload.js"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.50",
+    "@electron-forge/maker-deb": "6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.50",
+    "@electron-forge/maker-zip": "6.0.0-beta.50",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.50",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "autoprefixer": "^9.8.5",
+    "css-loader": "^3.6.0",
+    "electron": "^9.0.0",
+    "electron-positioner": "^4.1.0",
+    "googleapis": "^48.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mongoose": "^5.9.24",
+    "nanoid": "^2.1.11",
+    "node-loader": "^0.6.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^0.23.1"
+  },
+  "dependencies": {
+    "@microsoft/microsoft-graph-client": "^2.0.0",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "electron-json-storage": "^4.2.0",
+    "electron-log": "^4.2.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.2.0",
+    "github-api": "^3.3.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jade": "^1.11.0",
+    "jquery": "^3.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "node-abi": "^2.18.0",
+    "passport": "^0.4.1",
+    "passport-github": "^1.1.0",
+    "popper.js": "^1.16.1",
+    "simple-oauth2": "^3.4.0",
+    "sortablejs": "^1.10.2",
+    "underscore": "^1.10.2",
+    "vue": "^2.6.11"
+  }
+}

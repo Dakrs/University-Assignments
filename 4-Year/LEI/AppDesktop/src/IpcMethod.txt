@@ -1,0 +1,71 @@
+FrontEnd ToDos
+
+guardar a chave da api da google :
+
+Name: store_google_api_key
+Args: Key
+Type: invoke
+Return: True, False
+
+apagar um ToDo:
+
+Name: cancel_todo_id
+Args: Id do ToDo
+Type: invoke
+Return: True, False
+
+completar a ToDo:
+
+Name: complete_todo_id
+Args: Id do ToDo
+Type: invoke
+Return: True, False
+
+atualizar os indices da lista:
+
+Nome: update_list_index
+Args: [Todo]
+Type: invoke
+Return: True, False
+
+ir buscar todos os todos da aplicação:
+
+Nome: get_all_todos
+Args:
+Type: invoke
+Return: [ToDo]
+
+atualizar todos do git:
+
+Nome: get_git_todos
+Args:
+Type: invoke
+Return: [ToDo]
+
+atualizar todos do google:
+
+Nome: get_google_todos
+Args:
+Type: invoke
+Return: [ToDo]
+
+atualizar todos do outlook:
+
+Nome: get_outlook_todos
+Args:
+Type: invoke
+Return: [ToDo]
+
+adicionar um todo:
+
+Nome: add_todo
+Args: Todo
+Type: invoke
+Return: Todo
+
+visualizar o histórico:
+
+Nome: history
+Args:
+Type: invoke
+Return: [Todo]

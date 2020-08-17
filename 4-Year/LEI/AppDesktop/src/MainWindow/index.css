@@ -1,0 +1,249 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: auto;
+  min-height: 100vh;
+  -webkit-app-region: drag;
+}
+
+html {
+    overflow: auto;
+    min-height: 100%;
+}
+
+h1.special {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bolder;
+  font-style: italic;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+p.title {
+  font-size: 2em;
+  /*
+  font-family: 'Open Sans', sans-serif;
+  font-style: italic;*/
+}
+
+p.bolder {
+  font-weight: bolder;
+}
+
+div.azure{
+  background-color: #F1F5F7;
+}
+
+div.specfooter {
+  background-color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+div.leftBorder{
+  border-left: 1px solid;
+  border-color: #F1F5F7;
+}
+
+h1.title {
+  -webkit-user-select: none;
+  text-align: center;
+}
+
+h2.title {
+  -webkit-user-select: none;
+  text-align: center;
+}
+
+h2.left {
+  -webkit-user-select: none;
+  text-align: left;
+}
+
+p.nomargin {
+  margin: 0;
+  padding: 0;
+}
+
+td.footerCard{
+  padding: 0;
+  font-size: 12px;
+}
+
+td.details{
+  padding: 0;
+  font-size: 14px;
+}
+
+td.fontSize {
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+td.nomargin {
+  padding: 0;
+}
+
+td.grey {
+  color: grey;
+}
+
+div.scrollable {
+  overflow-y: scroll;
+}
+
+div.left {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  width: 26%;
+  /**
+  overflow-y: scroll;*/
+}
+
+div.middle {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 26%;
+  width: 41.25%;
+  overflow-y: scroll;
+}
+
+div.right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  /**
+  overflow-y: scroll;*/
+  width: 32.5%;
+}
+
+p.justify {
+  text-align: justify;
+  text-justify: auto;
+  font-size: 14px;
+}
+
+div.nomove {
+  -webkit-app-region: no-drag;
+  -webkit-user-select: none;
+}
+
+div.noselect {
+  -webkit-user-select: none;
+}
+
+div.mayDrag {
+
+}
+
+span.footerText {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+div.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 32.5%;
+  text-align: center;
+}
+
+div.bottomTittle {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 26%;
+  text-align: center;
+}
+
+span.addButton {
+  position: fixed;
+  left: 0;
+  top: 1%;
+  width: 24%;
+  text-align: right;
+  margin-right: 2%;
+  font-size: 16px;
+}
+
+div.sortBy {
+  position: fixed;
+  left: 0;
+  top: 15%;
+  width: 16%;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: left;
+}
+
+div.sync {
+  position: fixed;
+  left: 0;
+  top: 35%;
+  width: 16%;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: left;
+}
+
+div.history {
+  position: fixed;
+  left: 0;
+  top: 55%;
+  width: 16%;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: left;
+}
+
+span.mouse {
+  cursor: pointer;
+}
+
+span.sortBy {
+  width: 24%;
+  text-align: left;
+}
+
+span.noselect {
+  -webkit-user-select: none;
+}
+
+td.mouse {
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+
+div.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+div.container span:hover {
+  color: black;
+}
+
+div.item {
+  margin-right: 3%;
+  border-bottom: 2px solid #eeeeee;
+  color: #eeeeee;
+  padding: 3px;
+}
+
+div.active {
+  border-bottom: 2px solid #bdbdbd !important;
+  color: black;
+}
+
+div.containerHorizontal {
+  padding: 5%;
+}

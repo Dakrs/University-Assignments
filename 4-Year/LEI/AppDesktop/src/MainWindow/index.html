@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div class="container" id="MAIN_COMP" style="min-height: 100vh; margin: 0; padding: 0">
+      <div class="row" style="min-height: 100vh;">
+        <div class="col azure left" align="center">
+          <span class="addButton">
+            <i class="fa fa-plus-square-o fa-lg"  @click="toggleAddTodo()"></i>
+          </span>
+          <div class="sortBy">
+            <span class="text-muted noselect" style="font-size: 0.9rem">
+                SortBy
+            </span>
+            <table class="table table-borderless" style="margin-bottom:0">
+              <tbody>
+                <tr>
+                  <td @click="sortBy(0)" class="fontSize text-left mouse">
+                    <i class="fa fa-undo"></i>
+                    Reset
+                  </td>
+                </tr>
+                <tr>
+                  <td @click="sortBy(1)" class="fontSize text-left mouse">
+                    <i class="fa fa-hourglass-o"></i>
+                    Time
+                  </td>
+                </tr>
+                <tr>
+                  <td @click="sortBy(2)" class="fontSize text-left mouse">
+                    <i class="fa fa-cubes"></i>
+                    Origin
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sync">
+            <span class="text-muted noselect" style="font-size: 0.9rem">
+                Sync
+            </span>
+            <table class="table table-borderless" style="margin-bottom:0">
+              <tbody>
+                <tr>
+                  <td @click="sync(0)" class="fontSize text-left mouse">
+                    <i class="fa fa-github"></i>
+                    Github
+                  </td>
+                </tr>
+                <tr>
+                  <td @click="sync(1)" class="fontSize text-left mouse">
+                    <i class="fa fa-google"></i>
+                    Google
+                  </td>
+                </tr>
+                <tr>
+                  <td @click="sync(2)" class="fontSize text-left mouse">
+                    <i class="fa fa-windows"></i>
+                    Outlook
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="history">
+            <span class="text-muted noselect" style="font-size: 0.9rem">
+                Cloud
+            </span>
+            <table class="table table-borderless" style="margin-bottom:0">
+              <tbody>
+                <tr v-if="!sync_status[3]">
+                  <td @click="handleLogInModal()" class="fontSize text-left mouse">
+                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    Storage
+                  </td>
+                </tr>
+                <tr v-else>
+                  <td class="fontSize text-left">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    Connected
+                  </td>
+                </tr>
+                <tr v-if="sync_status[3]">
+                  <td class="fontSize text-left mouse" @click="toggleSync()">
+                    <i class="fa fa-superpowers" aria-hidden="true"></i>
+                    Refresh
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="title bottomTittle">
+            <p class="title">me<strong>todo</strong></p>
+          </div>
+        </div>
+        <div class="col middle nomove" align="center">
+          <h2 class="title">Your ToDos</h2>
+          <ul id="cards" style="list-style-type:none;">
+              <template v-for="(todo,index) in todos">
+                <li :key="todo._id">
+                  <div class="card mb-3">
+                    <div class="card-body" style="padding: 15px; padding-bottom:10px;">
+                      <table class="table table-borderless" style="margin-bottom:0">
+                        <tbody>
+                          <tr>
+                            <td class="text-left" style="padding:0;">
+                              <h5 class="card-title" style="margin:0">{{ todo.name }}</h5>
+                            </td>
+                            <td class="text-right" style="padding:0;">
+                              <span class="mouse" v-on:click="toggleInfo(todo._id)">
+                                <i class="fa fa-plus"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table table-borderless" style="margin-bottom:0">
+                        <tbody>
+                          <tr>
+                            <td class="text-left" style="padding:0;">
+                              <small class="text-muted">{{ todo.origin }}</small>
+                            </td>
+                            <template v-if="verifyProperty(todo.date)">
+                              <td class="text-right" style="padding:0;">
+                                <small class="text-muted">
+                                  <i class="fa fa-calendar"></i> {{ timeConversor(todo.date) }}
+                                </small>
+                              </td>
+                            </template>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="card-footer text-muted specfooter">
+                      <table class="table table-borderless" style="margin-bottom:0">
+                        <tbody>
+                          <tr>
+                            <td class="footerCard text-left mouse">
+                              <span v-on:click="complete(todo._id)">
+                                <i class="fa fa-check-square-o" style="color: green"></i> Complete
+                              </span>
+                            </td>
+                            <td class="footerCard text-right mouse">
+                              <span v-on:click="cancel(todo._id)">
+                                 <i class="fa fa-ban" style="color: red"></i> Cancel
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </li->
+              </template>
+            </ul>
+        </div>
+        <div class="col leftBorder right">
+          <div style="margin-top: 25.5%">
+            <template v-if="toggled !== null">
+              <h3 class="left">Details:</h3>
+              <todo-info
+                v-bind:todo="toggled"
+                :callback_cancel="cancel_toggle"
+                :callback_completed="complete_toggle"
+              ></todo-info>
+            </template>
+          </div>
+          <div class="footer">
+            <span class="footerText">made with <i class="fa fa-heart" style="color: red"></i> by AmCyNi</span>
+          </div>
+        </div>
+      </div>
+      <login-modal
+        :submit_fun="handleLogInSubmit">
+      </login-modal>
+      <google-key-modal
+        :submit_fun="handleGoogleModal">
+      </google-key-modal>
+      <outlook-key-modal
+        :submit_fun="handleOutlookModal">
+      </outlook-key-modal>
+      <github-key-modal
+        :submit_fun="handleGitHubModal">
+      </github-key-modal>
+      <add-todo
+        :callback="addTodo"
+      ></add-todo>
+    </div>
+    <!--div id="VUE-MODEL">
+      <api-modal></api-modal>
+    </div-->
+  </body>
+</html>
