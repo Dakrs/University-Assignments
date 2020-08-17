@@ -1,0 +1,386 @@
+﻿@{
+    string name = @User.Identity.Name;
+    string id = @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Sid)?.Value;
+    string type = @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Olivia</title>
+    <link href="~/layout/assets/img/brand/favicon.png" rel="icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="~/layout/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link href="~/layout/assets/vendor/@{}fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link type="text/css" href="~/layout/assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+
+</head>
+<body>
+    <!-- Sidenav -->
+    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-Secondary" id="sidenav-main">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <div class="container-fluid" style="height:20%">
+                <h1 class="text-center" style="font-size:54px; color:#CB0035"> Olivia </h1>
+            </div>
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                <!-- Form -->
+                <form class="mt-4 mb-3 d-md-none">
+                    <div class="input-group input-group-rounded input-group-merge">
+                        <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fa fa-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- Navigation -->
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/User">
+                            <i class="ni ni-tv-2 text-default"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/User/Profile">
+                            <i class="ni ni-single-02 text-default"></i> User profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Recipe/Create">
+                            <i class="far fa-plus-square text-default"></i> Create Recipe
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Menu">
+                            <i class="fas fa-bars text-default"></i>Menu
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/User/History">
+                            <i class="ni ni-calendar-grid-58 text-default"></i> History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/User/Logout">
+                            <i class="ni ni-button-power text-default"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+                <button id="startRecognizeOnceAsyncButton" class="btn btn-outline-warning">Start recognition</button>
+                <td><textarea readonly id="phraseDiv" style="display: inline-block;width:100;height:200px"></textarea></td>
+                <hr class="my-3">
+                <!-- por aprovar -->
+                @if (type == "1")            
+                {
+                    <a href="/User/Colab" class="btn btn-outline-warning">Needs Approval</a>
+                }
+
+            </div>
+        </div>
+    </nav>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top navbar -->
+        <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/User">Dashboard</a>
+                <!-- Form -->
+                <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" action=@Url.Action("Search", "Recipe")>
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input class="form-control" name="words" placeholder="Search" type="text">
+                        </div>
+                    </div>
+                </form>
+                <!-- User -->
+                <ul class="navbar-nav align-items-center d-none d-md-flex">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="media align-items-center">
+                                <span class="avatar avatar-sm rounded-circle">
+                                    <img alt="Image placeholder" src="https://cdn2.iconfinder.com/data/icons/web-development-17/64/aspnet_asp_net_web_browser_development_language-2-512.png">
+                                </span>
+                                <div class="media-body ml-2 d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold">@name</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                            <div class=" dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Welcome!</h6>
+                            </div>
+                            <a class="dropdown-item" href="/User/Profile">
+                                <i class="ni ni-single-02 text-default" href="/User/Profile"></i>
+                                <span>My profile</span>
+
+                            </a>
+                            <a class="dropdown-item" href="/User/Logout">
+                                <i class="ni ni-button-power text-default" ></i>
+                                <span>Log out</span>
+                            </a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Header -->
+        @RenderBody()
+
+        <script src="~/layout/assets/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="~/layout/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/layout/assets/vendor/chart.js/dist/Chart.min.js"></script>
+        <script src="~/layout/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+        <script src="~/layout/assets/js/argon.js?v=1.0.0"></script>
+
+        <script> // to utf-8
+            function encode_utf8( s ){
+                 return unescape( encodeURIComponent( s ) );
+            }( '\u4e0a\u6d77' )
+        </script>
+
+        <!-- Speech SDK reference sdk. -->
+        <script src="~/js/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+        <!-- Text to Speech (Setup Inicial) -->
+        <script>
+            try {
+              var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+              var recognition = new SpeechRecognition();
+            }
+            catch(e) {
+              console.error(e);
+              $('.no-browser-support').show();
+              $('.app').hide();
+            }
+
+            recognition.onstart = function() { 
+              instructions.text('Voice recognition activated. Try speaking into the microphone.');
+            }
+            recognition.onspeechend = function() {
+              instructions.text('You were quiet for a while so voice recognition turned itself off.');
+            }
+            recognition.onerror = function(event) {
+              if(event.error == 'no-speech') {
+                instructions.text('No speech was detected. Try again.');  
+              };
+            }
+            recognition.onresult = function(event) {
+
+              // event is a SpeechRecognitionEvent object.
+              // It holds all the lines we have captured so far. 
+              // We only need the current one.
+              var current = event.resultIndex;
+
+              // Get a transcript of what was said.
+              var transcript = event.results[current][0].transcript;
+
+              // Add the current transcript to the contents of our Note.
+              noteContent += transcript;
+              noteTextarea.val(noteContent);
+            }
+            var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
+                //mobile bug fix
+            if(!mobileRepeatBug) {
+              noteContent += transcript;
+              noteTextarea.val(noteContent);
+            }
+
+
+            $('#start-record-btn').on('click', function(e) {
+              recognition.start();
+            });
+
+            $('#pause-record-btn').on('click', function(e) {
+              recognition.stop();
+            });
+
+            function readOutLoud(message) {
+              var speech = new SpeechSynthesisUtterance();
+
+              // Set the text and voice attributes.
+              speech.text = message;
+              speech.volume = 1;
+              speech.rate = 1;
+              speech.pitch = 1;
+
+              window.speechSynthesis.speak(speech);
+            }
+
+
+
+
+        </script>
+        <script>
+            var speechConfig;
+            speechConfig = SpeechSDK.SpeechConfig.fromSubscription("3aadf2f2ea99425199b47ed54bc4081f", "westus");
+
+        speechConfig.speechRecognitionLanguage = "pt-PT";
+        var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+        recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+
+                    //  The event recognizing signals that an intermediate recognition result is received.
+            recognizer.recognizing = function (s, e) {
+                var texto = e.result.text;
+                if (texto.includes("olívia") || texto.includes("ok"))
+                    document.getElementById("startRecognizeOnceAsyncButton").click();
+               console.log('recognizing text', e.result.text);
+               };
+
+                    //  The event recognized signals that a final recognition result is received.
+            recognizer.recognized = function (s, e) {
+                if (texto.includes("olívia") )
+                    document.getElementById("startRecognizeOnceAsyncButton").click();
+                        console.log('recognized text', e.result.text);
+            };
+            
+            var currentLocation = window.location.href;
+            var urlAtual = currentLocation.match(/.*\/Cook$/gi);
+            //var res = urlAtual[0];
+            if (urlAtual == null) 
+                recognizer.startContinuousRecognitionAsync();
+        </script>
+        <!-- Speech SDK USAGE -->
+        <script>
+            // status fields and start button in UI
+            var phraseDiv;
+            var startRecognizeOnceAsyncButton;
+
+            // subscription key and region for speech services.
+            var authorizationToken;
+            var SpeechSDK;
+            var recognizer;
+
+           
+            
+
+            
+
+            document.addEventListener("DOMContentLoaded", function () {
+                
+                startRecognizeOnceAsyncButton = document.getElementById("startRecognizeOnceAsyncButton");
+                phraseDiv = document.getElementById("phraseDiv");
+
+                startRecognizeOnceAsyncButton.addEventListener("click", function () {
+                    startRecognizeOnceAsyncButton.disabled = true;
+                    phraseDiv.innerHTML = "";
+                            readOutLoud("Sim Senhor Engenheiro");
+
+
+                    // if we got an authorization token, use the token. Otherwise use the provided subscription key
+                    var speechConfig;
+                    if (authorizationToken) {
+                        speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken("ec079ac7489c4b7ebe4f3b24c91b41f0", "westus");
+                    } else {
+                        speechConfig = SpeechSDK.SpeechConfig.fromSubscription("ec079ac7489c4b7ebe4f3b24c91b41f0", "westus");
+                    }
+
+                    speechConfig.speechRecognitionLanguage = "pt-PT";
+                    var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+                    recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+                    recognizer.recognizeOnceAsync(
+                        function (result) {
+                            startRecognizeOnceAsyncButton.disabled = false;
+                            var locationFinal;
+                            var frase = String(result.text);
+                            var currentLocation = window.location.href;
+                            var urlAtual = currentLocation.match(/.*\/(User|Recipe|Cook|Menu)/gi);
+                            var res = urlAtual[0];
+                            if (res != null && res != undefined) {
+                                var aux = res.match(/e$/gi);
+                                if (aux != null)
+                                    locationFinal = res.substr(0, res.length - 7);
+                                else
+                                    locationFinal = res.substr(0, res.length - 5);
+
+                                if (frase.includes("menu")) {
+                                    locationFinal = locationFinal.concat("/User")
+                                    window.location.href = locationFinal;
+                                }if (frase.includes("editar perfil")) {
+                                    locationFinal = locationFinal.concat("/User/EditProfile")
+                                    window.location.href = locationFinal;
+                                }if (frase.includes("ver perfil")) {
+                                    locationFinal = locationFinal.concat("/User/Profile ")
+                                    window.location.href = locationFinal;
+                                } if (frase.includes("começar receita") || frase.includes("começar a receita")) {
+                                    var onRecipe = urlAtual[0].match(/.*\/Recipe/gi);
+                                    if (onRecipe != null && onRecipe != undefined) {
+                                        locationFinal = locationFinal.concat("/Cook")
+                                        window.location.href = locationFinal;
+                                    }
+                                } if (frase.includes("criar receita") || frase.includes("nova receita")) {
+                                        locationFinal = locationFinal.concat("/Recipe/Create")
+                                        window.location.href = locationFinal;
+                                }
+                                else if (frase.includes("desligar")) {
+                                    readOutLoud("A sair");
+                                    locationFinal = locationFinal.concat("/User/Logout")
+                                    setTimeout(function () {
+                                        window.location.href = locationFinal;
+                                    }, 1000);
+                                    //window.location.href = locationFinal;
+                                } else if (frase.includes("auto-avaliação") || frase.includes("auto avaliação")) {
+                                    readOutLoud("É para o 20");
+                                } else if (frase.includes("tenho fome")) {
+                                    locationFinal = locationFinal.concat("/Recipe/Random")
+                                    readOutLoud("A escolher receita");
+                                    setTimeout(function () {
+                                        window.location.href = locationFinal;
+                                    }, 2000);
+                                    //window.location.href = locationFinal;
+                                }
+                            phraseDiv.innerHTML += result.text;
+                            window.console.log(result);
+
+                            }
+
+                            recognizer.close();
+                            recognizer.startContinuousRecognitionAsync();
+                            recognizer = undefined;
+
+                        },
+                        function (err) {
+                            startRecognizeOnceAsyncButton.disabled = false;
+                            phraseDiv.innerHTML += err;
+                            window.console.log(err);
+
+                            recognizer.close();
+                            recognizer.startContinuousRecognitionAsync();
+                            recognizer = undefined;
+                        });
+                });
+
+                if (!!window.SpeechSDK) {
+                    SpeechSDK = window.SpeechSDK;
+                    startRecognizeOnceAsyncButton.disabled = false;
+
+                    document.getElementById('content').style.display = 'block';
+                    document.getElementById('warning').style.display = 'none';
+
+                    // in case we have a function for getting an authorization token, call it.
+                    if (typeof RequestAuthorizationToken === "function") {
+                        RequestAuthorizationToken();
+                    }
+                }
+            });
+        </script>
+
+                    
+</body>
+</html>
