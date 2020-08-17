@@ -1,0 +1,14 @@
+PAPI_L1_DCM Level 1 data cache misses
+PAPI_L1_ICM Level 1 instruction cache misses
+PAPI_L2_DCM Level 2 data cache misses
+PAPI_L1_TCM Level 1 cache misses
+PAPI_L2_TCM Level 2 cache misses
+PAPI_L3_TCM Level 3 cache misses
+PAPI_TOT_INS Instructions completed
+PAPI_FP_INS Floating point instructions
+PAPI_LD_INS Load instructions
+PAPI_SR_INS Store instructions
+PAPI_TOT_CYC Total cycles
+PAPI_FP_OPS Floating point operations
+PAPI_VEC_SP Single precision vector/SIMD instructions
+PAPI_VEC_DP Double precision vector/SIMD instructions

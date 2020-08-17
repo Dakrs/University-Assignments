@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %} Base {% endblock %}</title>
+</head>
+<body>
+    {% block tabname %}
+    <p>Tabela de Utilizadores</p>
+    {% endblock %}
+    <table>
+        <tr>
+        {% for col in columns %} <td>{{col}}</td>{% endfor %}
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.id}}</td> <td>{{user.name}}</td>
+            {% if user.sex == 'M' %}<td>Male</td>{% else %}<td>Female</td>{% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+</body>
+</html>

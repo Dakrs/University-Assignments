@@ -1,0 +1,40 @@
+# source files.
+SRC = asp.c
+
+OBJ = $(SRC:.cpp=.o)
+
+OUT = asp
+
+# include directories
+INCLUDES = -I.
+
+# C compiler flags
+CCFLAGS = -O3 -g -Wall -march=native -fopenmp -fopt-info-optimized -flto-report -lpthread -mavx
+
+# compiler
+CCC = gcc
+
+# libraries
+LIBS =
+
+.SUFFIXES: .cpp .c
+
+
+default: $(OUT)
+
+.cpp.o:
+	$(CCC) $(CCFLAGS) $(INCLUDES)  -c $< -o $@
+
+.c.o:
+	$(CCC) $(CCFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OUT): $(OBJ)
+	$(CCC) -o $(OUT) $(CCFLAGS) $(OBJ) $(LIBS)
+
+depend:  dep
+#
+#dep:
+#	makedepend -- $(CFLAGS) -- $(INCLUDES) $(SRC)
+
+clean:
+	rm -f *.o .a *~ Makefile.bak $(OUT)

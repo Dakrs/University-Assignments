@@ -1,0 +1,55 @@
+CC = mpicxx
+CFLAGS = -O3 -g -fopenmp
+
+INCLUDES = -I include
+
+SRC := src
+OBJ := obj
+
+NAME = CRS_HYBRID CRS_HYBRID_OLD CRS_HYBRID_SEQ CRS_HYBRID_TASK
+
+SOURCES := $(wildcard $(SRC)/*.cpp)
+OBJECTS := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SOURCES))
+
+CRS_MAIN_TARGET=crs_main
+
+CRS_HYBRID_OLD_TARGET=crs_main_old
+
+CRS_HYBRID_SEQ_TARGET=crs_main_seq
+
+CRS_HYBRID_TASK_TARGET=crs_main_task
+
+ALL_MAINS=obj/crs_main_old.o obj/crs_main.o obj/crs_main_seq.o obj/crs_main_task.o
+
+OBJECTS_WITHOUT_MAINS := $(filter-out $(ALL_MAINS),$(OBJECTS))
+
+all: CRS_HYBRID CRS_HYBRID_OLD CRS_HYBRID_SEQ CRS_HYBRID_TASK
+
+CRS_HYBRID: $(OBJECTS_WITHOUT_MAINS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC)/$(CRS_MAIN_TARGET).cpp -o $(OBJ)/$(CRS_MAIN_TARGET).o
+	$(CC) $(CFLAGS) $(INCLUDES) -o CRS_HYBRID $(OBJECTS_WITHOUT_MAINS) $(OBJ)/$(CRS_MAIN_TARGET).o
+	@echo  CRS_HYBRID Compiled without errors
+
+CRS_HYBRID_OLD: $(OBJECTS_WITHOUT_MAINS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC)/$(CRS_HYBRID_OLD_TARGET).cpp -o $(OBJ)/$(CRS_HYBRID_OLD_TARGET).o
+	$(CC) $(CFLAGS) $(INCLUDES) -o CRS_HYBRID_OLD $(OBJECTS_WITHOUT_MAINS) $(OBJ)/$(CRS_HYBRID_OLD_TARGET).o
+	@echo  CRS_HYBRID_OLD Compiled without errors
+
+CRS_HYBRID_SEQ: $(OBJECTS_WITHOUT_MAINS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC)/$(CRS_HYBRID_SEQ_TARGET).cpp -o $(OBJ)/$(CRS_HYBRID_SEQ_TARGET).o
+	$(CC) $(CFLAGS) $(INCLUDES) -o CRS_HYBRID_SEQ $(OBJECTS_WITHOUT_MAINS) $(OBJ)/$(CRS_HYBRID_SEQ_TARGET).o
+	@echo  CRS_HYBRID_SEQ Compiled without errors
+
+CRS_HYBRID_TASK: $(OBJECTS_WITHOUT_MAINS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC)/$(CRS_HYBRID_TASK_TARGET).cpp -o $(OBJ)/$(CRS_HYBRID_TASK_TARGET).o
+	$(CC) $(CFLAGS) $(INCLUDES) -o CRS_HYBRID_TASK $(OBJECTS_WITHOUT_MAINS) $(OBJ)/$(CRS_HYBRID_TASK_TARGET).o
+	@echo  CRS_HYBRID_TASK Compiled without errors
+
+$(OBJ)/%.o: $(SRC)/%.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	$(RM) -r $(OBJ)
+	$(RM) $(NAME)
+
+$(shell   mkdir -p $(OBJ))
