@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package tp;
+
+message Message{
+     string type = 1;
+     User user = 2;
+     Response response = 3;
+     ManufacturerOrder manufacturerOrder = 4;
+     ImporterOffer importerOffer = 5;
+     Reply reply = 6;
+}
+
+message User {
+     string username=1;
+     string password = 2;
+     int32 type = 3;
+}
+
+message Response {
+     int32 status = 1;
+     string response = 2;
+}
+
+message ManufacturerOrder {
+     int64 id = 1;
+     string manufacturer = 2;
+     string product = 3;
+     int64 minQuantity = 4;
+     int64 maxQuantity = 5;
+     double unitPrice = 6;
+     int32 active = 7;
+     int64 negotiation  = 8;
+}
+
+message ImporterOffer {
+     int64 id = 1;
+     string importer = 2;
+     string product = 3;
+     int64 quantity = 4;
+     double unitPrice = 5;
+     int64 idorder = 6;
+     enum State {
+          EMITTED = 0;
+          ACCEPTED = 1;
+          DECLINED = 2;
+     }
+     State state = 7;
+}
+
+message Reply {
+     int64 id = 1;
+     string product = 2;
+     string manufacturer = 3;
+     enum Result {
+          CANCELED = 0;
+          FINISHED = 1;
+     }
+     Result res = 4;
+     repeated ImporterOffer offers = 5;
+     int64 profit = 6;
+}
