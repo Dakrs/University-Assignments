@@ -1,0 +1,39 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+
+typedef struct heap{
+	int size;
+	int n_elem;
+	int * array;
+}* HEAP;
+
+HEAP init(int size){
+	HEAP aux = malloc(sizeof(struct heap));
+	aux->size = size;
+	aux->n_elem = 0;
+	aux->array = malloc(sizeof(struct heap));
+
+	return aux;
+}
+
+void swap(int * v, int i, int d){
+	int aux;
+	aux = v[i];
+	v[i] = v[d];
+	v[d] = aux;
+}
+
+
+void bubble_down(HEAP h){
+	int val,pai,i;
+	if (h->n_elem >= 2){
+		i = h->n_elem -1;
+		val = h->array[i];
+		pai = i / 2;
+		while(val > pai){
+
+		}
+
+	}
+}
